@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import next.model.User;
 
+import java.util.Objects;
+
 public class UserSessionUtils {
     public static final String USER_SESSION_KEY = "user";
 
@@ -15,15 +17,12 @@ public class UserSessionUtils {
         return (User) user;
     }
 
-    public static boolean isLogined(HttpSession session) {
-        if (getUserFromSession(session) == null) {
-            return false;
-        }
-        return true;
+    public static boolean isLogin(HttpSession session) {
+        return getUserFromSession(session) != null;
     }
 
     public static boolean isSameUser(HttpSession session, User user) {
-        if (!isLogined(session)) {
+        if (!isLogin(session)) {
             return false;
         }
 
@@ -31,6 +30,6 @@ public class UserSessionUtils {
             return false;
         }
 
-        return user.isSameUser(getUserFromSession(session));
+        return user.isSameUser(Objects.requireNonNull(getUserFromSession(session)));
     }
 }

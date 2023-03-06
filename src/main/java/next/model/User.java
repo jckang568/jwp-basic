@@ -1,7 +1,7 @@
 package next.model;
 
 public class User {
-    private String userId;
+    private final String userId;
     private String password;
     private String name;
     private String email;
@@ -77,11 +77,8 @@ public class User {
         } else if (!name.equals(other.name))
             return false;
         if (userId == null) {
-            if (other.userId != null)
-                return false;
-        } else if (!userId.equals(other.userId))
-            return false;
-        return true;
+            return other.userId == null;
+        } else return userId.equals(other.userId);
     }
 
     @Override
